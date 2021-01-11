@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Subject(models.Model):
@@ -20,8 +21,10 @@ class Subject(models.Model):
 
     def get_absolute_url(self):
         '''return url for the subject object'''
-        return reverse('subject:topic_list',
+        val = reverse('notes:product_list_by_subject',
                        args=[self.slug])
+        print (f"\n absolute url for subject is: {val}")
+        return val
 
 
 class Topic(models.Model):
@@ -51,7 +54,7 @@ class Topic(models.Model):
 
     def get_absolute_url(self):
         ''' return url of the object'''
-        return reverse('topic:topic_detail',
+        return reverse('notes:topic_detail',
                     args=[self.id, self.slug])
 
 

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  {{ topic.name }}
+{% endblock %}
+{% block content %}
+  <div class="product-detail">
+    <h1>{{ topic.title }}</h1>
+    <article>
+        {{ topic.notes}}
+    </article>
+    <h3>
+      <a href="{{ topic.subject.get_absolute_url }}">
+        {{ topic.subject }}
+      </a>
+    </h3>
+    <div> 
+        {% if topic.question.all %}
+        <h3> Your Questions: </h3>
+        {% for q in topic.question.all %}
+        <li>{{ q.title }}</li>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+  </div>
+{% endblock %}
