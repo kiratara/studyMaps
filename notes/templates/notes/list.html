@@ -16,26 +16,25 @@
             <a href="{{ s.get_absolute_url }}">{{ s.name }}</a>
         </li>
         {% endfor %}
-        <li> <a href="{ % url "notes:product_list_by_subject"%}" class="add-subject">Add Subject </a></li>
+        <li> <a href="{% url "notes:add_subject" %}" class="add-subject add-resource">Add Subject </a></li>
     </ul>
 </div>
 <!-- BODY -->
 <div id="main" class="container">
-    <h1>{% if subject %}{{ subject.name }} {% else %} Your notes {% endif %}</h1>
-    <div class="row gap-3">
+    <h1 class="topic-header">{% if subject %}{{ subject.name }} {% else %} Your notes {% endif %}</h1>
+    <div class="row gap-2">
         {% for topic in topics %}
-        <!-- <div class="col-sm-6"> -->
-        <div class="card" style="width: 14rem;">
+        <div class="card shadow-sm rounded-2 m-1" style="width: 14rem;">
             <div class="card-body">
                 <h5 class="card-title ">{{ topic.title }}</h5>
-                <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
                 <br>
                 <p class="card-text text-muted">{{ topic.notes|truncatechars:50 }}</p>
-                <a href="{{ topic.get_absolute_url }}" lass="card-link">Visit</a>
+                <a href="{{ topic.get_absolute_url }}" class="card-link">Visit</a>
             </div>
         </div>
-        <!-- </div> -->
         {% endfor %}
-    </div>
+                <button type="button" class="btn btn-light btn-lg">
+                    <a href="{% url "notes:add_topic" %}" class="mt-1 add-resource text-center">Add New Topic </a>
+                </button>
 </div>
 {% endblock %}

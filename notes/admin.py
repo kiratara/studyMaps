@@ -29,5 +29,5 @@ class QuestionAdmin(admin.ModelAdmin):
     Register Question model with the admin.
     Define the view for Question. 
     '''
-    list_display = ['title', 'topic']
-    # prepopulated_fields = {'slug': ('title',)} 
+    list_display = ['title', 'topic', 'slug']
+    prepopulated_fields = {'slug': ('title',)} 
