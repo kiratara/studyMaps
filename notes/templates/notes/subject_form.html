@@ -7,9 +7,12 @@
 {% block content %}
 <H5> {{ message }} </H5>
 <h1>{% if error %} Sorry, there was an error on our end, pleasem try again {% endif %}</h1>
-<form  method="post">
-    {% csrf_token %}
-    {{ form|crispy  }}
-    <button type="submit" class="btn btn-success">Add Subject</button>
-</form>
+<div class="card-body">
+    <form  method="post">
+        {% csrf_token %}
+        {{ form|crispy  }}
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+
 {% endblock %}

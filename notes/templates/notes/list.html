@@ -6,7 +6,7 @@
 {% block content %}
 <!-- SIDEBAR -->
 <div id="sidebar">
-    <h3>Subjects</h3>
+    <h2 class="sidebar-header">Subjects</h2>
     <ul>
         <li {% if not subject %}class="selected" {% endif %}>
             <a href="{% url "notes:topic_list" %}">All</a>
@@ -16,15 +16,26 @@
             <a href="{{ s.get_absolute_url }}">{{ s.name }}</a>
         </li>
         {% endfor %}
-        <li> <a href="{% url "notes:subject_add"  %}" class="add-subject add-resource">Add Subject </a></li>
+        <button class="add-subject btn btn-success">  <a href="{% url "notes:subject_add"  %}">Add Subject </a></button>
     </ul>
 </div>
 <!-- BODY -->
 <div id="main" class="container">
-    <h1 class="topic-header">{% if subject %}{{ subject.name }} 
-        <li><a href="{% url "notes:subject_update" subject.id %}">Edit</a></li>
-        <li><a href="{% url "notes:subject_delete" subject.id %}">delete</a></li>     
-        {% else %} Your notes {% endif %}</h1>
+
+    {% if subject %}
+    <header class="topic-header container"> 
+        <h4>{{ subject.name }}</h4> 
+        <ul>
+            <li><a href="{% url "notes:subject_update" subject.id %}">Edit</a></li>
+            <li><a href="{% url "notes:subject_delete" subject.id %}">Delete </a></li>
+        </ul>
+    </header>
+    {% else %}
+    <header class="topic-header">
+        <h4>Your Notes:</h4>
+    </header>
+    {% endif %}
+    
     <div class="row gap-2">
         {% for topic in topics %}
         <div class="card shadow-sm rounded-2 m-1" style="width: 14rem;">
@@ -36,12 +47,12 @@
             </div>
         </div>
         {% endfor %}
-        <!-- ADD NEW TOPIC -->
-        {% if subject %} 
-        <button type="button" class="btn btn-light btn-lg">
-            <a href="{% url "notes:topic_add" subject.id %}" class="mt-1 add-resource text-center">Add New Topic </a>
-        </button>
-        {% endif %}
     </div>
+    <!-- ADD NEW TOPIC -->
+    {% if subject %} 
+    <button type="button" class="btn btn-secondary add-resource">
+        <a href="{% url "notes:topic_add" subject.id %}" class=" text-center">Add New Topic </a>
+    </button>
+{% endif %}
 </div>
     {% endblock %}
