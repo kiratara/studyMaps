@@ -5,7 +5,7 @@
 Add new Question
 {% endblock %}
 {% block content %}
-<H5> Add new Question </H5>
+<H5> Add new Question  </H5>
 <h1>{% if error %} Sorry, there was an error on our end, pleasem try again {% endif %}</h1>
 <!-- <form method="post">
     {% for field in form %}
@@ -21,6 +21,6 @@ Add new Question
 <form method="post">
   {% csrf_token %}
   {{ form|crispy  }}
-  <button type="submit" class="btn btn-success">Add Subject</button>
+  <button type="submit" class="btn btn-success">Add Question</button>
 </form>
 {% endblock %}

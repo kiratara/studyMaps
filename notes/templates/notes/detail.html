@@ -4,26 +4,6 @@
 {{ topic.name }}
 {% endblock %}
 {% block content %}
-<!-- <div class="product-detail">
-    <h1>{{ topic.title }}</h1>
-    <article>
-        {{ topic.notes}}
-    </article>
-    <h3>
-        <a href="{{ topic.subject.get_absolute_url }}">
-            {{ topic.subject }}
-        </a>
-    </h3>
-    <div>
-        {% if topic.question.all %}
-        <h3> Your Questions: </h3>
-        {% for q in topic.question.all %}
-        <li>{{ q.title }}</li>
-        {% endfor %}
-        {% endif %}
-    </div>
-    <li> <a href="{% url "notes:add_question" topic.id %}" class=" add-resource">Add Questions</a></li>
-</div> -->
 <div class="card mt-4">
     <div class="card-header">
         {{ topic.title}}
@@ -32,18 +12,28 @@
       <h5 class="card-title">{{ topic.subject }}</h5>
       <p class="card-text">{{ topic.notes }}</p>
       <div class="card-body">
+            <a href="{% url "notes:topic_update" topic.id %}" >Edit-Note</a>          
         {% if topic.question.all %}
-        <h3> Your Questions: </h3>
-        <ol>
+       <h3> Your Questions: </h3>
+        <div class="row gap-2">
             {% for q in topic.question.all %}
-            <li>{{ q.title }}</li>
+            <div class="card shadow-sm rounded-2 m-1" style="width: 14rem;">
+                <div class="card-body">
+                    <h5 class="card-title ">{{ q.title }}</h5>
+                    <!-- <button type='button' class="btn btn-secondary">Resolved</button> -->
+                    <!-- <a href="{% url "notes:question_add" topic.id %}">Resolved</a> -->
+                    <a href="{% url "notes:question_update" topic.id q.id %}">Edit</a>
+                    <a href="{% url "notes:question_delete" topic.id q.id %}">Delete</a>
+                </div>
+            </div>
             {% endfor %}
-            {% endif %}
-        </ol>
+        </div>
+        {% endif %}
+        <br>
+        <a href="{% url "notes:topic_delete" topic.id %}">Delete</a>
+        <br>
+        <a href="{% url "notes:question_add" topic.id %}">Add more Question</a>
       </div>
-      <a href="{% url "notes:add_question" topic.id %}" class="btn btn-secondary">Add more Question</a>
-      <a href="#" class="btn btn-secondary"> {{ topic.subject}} </a>
-      <a href="#" class="btn btn-secondary">Edit - !!</a>
     </div>
   </div>
 {% endblock %}

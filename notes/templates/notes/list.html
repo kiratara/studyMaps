@@ -12,16 +12,19 @@
             <a href="{% url "notes:topic_list" %}">All</a>
         </li>
         {% for s in subjects %}
-        <li {% if subject.slug == s.slug %} class="selected" {% endif %}>
+        <li {% if subject.slug == s.slug %}class="selected" {% endif %}>
             <a href="{{ s.get_absolute_url }}">{{ s.name }}</a>
         </li>
         {% endfor %}
-        <li> <a href="{% url "notes:add_subject" %}" class="add-subject add-resource">Add Subject </a></li>
+        <li> <a href="{% url "notes:subject_add"  %}" class="add-subject add-resource">Add Subject </a></li>
     </ul>
 </div>
 <!-- BODY -->
 <div id="main" class="container">
-    <h1 class="topic-header">{% if subject %}{{ subject.name }} {% else %} Your notes {% endif %}</h1>
+    <h1 class="topic-header">{% if subject %}{{ subject.name }} 
+        <li><a href="{% url "notes:subject_update" subject.id %}">Edit</a></li>
+        <li><a href="{% url "notes:subject_delete" subject.id %}">delete</a></li>     
+        {% else %} Your notes {% endif %}</h1>
     <div class="row gap-2">
         {% for topic in topics %}
         <div class="card shadow-sm rounded-2 m-1" style="width: 14rem;">
@@ -33,8 +36,12 @@
             </div>
         </div>
         {% endfor %}
-                <button type="button" class="btn btn-light btn-lg">
-                    <a href="{% url "notes:add_topic" %}" class="mt-1 add-resource text-center">Add New Topic </a>
-                </button>
+        <!-- ADD NEW TOPIC -->
+        {% if subject %} 
+        <button type="button" class="btn btn-light btn-lg">
+            <a href="{% url "notes:topic_add" subject.id %}" class="mt-1 add-resource text-center">Add New Topic </a>
+        </button>
+        {% endif %}
+    </div>
 </div>
-{% endblock %}
+    {% endblock %}

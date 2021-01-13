@@ -1,6 +1,6 @@
 from django.db import models
-from django.urls import reverse
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 
 class Subject(models.Model):
@@ -78,8 +78,8 @@ class Question(models.Model):
 
     def get_absolute_url(self):
         ''' return url of the object'''
-        return reverse('question:question_detail',
-                    args=[self.id, self.slug])
+        return reverse('notes:topic_detail',
+                    args=[self.topic.id, self.topic.slug])
 
     def __str__(self):
         '''String representation of Question'''

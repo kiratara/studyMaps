@@ -2,23 +2,11 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block title %}
-Add new Topic
+{{ message }}
 {% endblock %}
 {% block content %}
-<H5> Add new Topic</H5>
+<H5> Add new Topic for {{ subject }}</H5>
 <h1>{% if error %} Sorry, there was an error on our end, pleasem try again {% endif %}</h1>
-<!-- <form action="/add-topic/" method="post">
-
-    {% for field in form %}
-    <div>
-      {{ field.errors }}
-      {{ field.label_tag }} {{ field }}
-    </div>
-  {% endfor %}
-  
-    {% csrf_token %}
-    <input type="submit" value="Add">
-</form> -->
 <form method="post">
   {% csrf_token %}
   {{ form|crispy  }}

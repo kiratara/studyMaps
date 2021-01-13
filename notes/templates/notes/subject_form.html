@@ -2,17 +2,12 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block title %}
-Add new Subject
+{{ message }}
 {% endblock %}
 {% block content %}
-<H5> Add new Subject</H5>
+<H5> {{ message }} </H5>
 <h1>{% if error %} Sorry, there was an error on our end, pleasem try again {% endif %}</h1>
-<!-- <form action="/add-subject/" method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <input type="submit" value="Add">
-</form> -->
-<form method="post">
+<form  method="post">
     {% csrf_token %}
     {{ form|crispy  }}
     <button type="submit" class="btn btn-success">Add Subject</button>

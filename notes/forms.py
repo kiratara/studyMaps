@@ -1,5 +1,6 @@
 from django.forms import ModelForm
-from .models import Subject, Topic, Question
+
+from .models import Question, Subject, Topic
 
 
 class SubjectForm(ModelForm):
