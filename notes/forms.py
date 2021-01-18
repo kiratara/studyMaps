@@ -1,6 +1,15 @@
 from django.forms import ModelForm
-
+from django.contrib.auth.models import User
 from .models import Question, Subject, Topic
+from django import forms
+
+
+class LoginForm(forms.Form):
+    '''Login form used by users to login to be
+    authenticated
+    '''
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
 
 
 class SubjectForm(ModelForm):

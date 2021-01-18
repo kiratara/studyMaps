@@ -6,6 +6,7 @@
 {% endblock %}
 {% block content %}
 <H5> Add new Topic for {{ subject }}</H5>
+<hr>
 <h1>{% if error %} Sorry, there was an error on our end, pleasem try again {% endif %}</h1>
 <form method="post">
   {% csrf_token %}

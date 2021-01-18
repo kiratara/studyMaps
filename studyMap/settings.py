@@ -31,13 +31,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'notes',
+    'django.contrib.admin',
     'crispy_forms'
 ]
 
@@ -124,3 +124,6 @@ STATIC_URL = '/static/'
 # self
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+LOGIN_REDIRECT_URL = 'notes:topic_list'
+LOGIN_URL = 'notes:login'
+LOGOUT_URL = 'notes:logout'

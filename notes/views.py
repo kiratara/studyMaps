@@ -3,11 +3,34 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import View
 from django.views.generic import CreateView, ListView, UpdateView
-
-from .forms import QuestionForm, SubjectForm, TopicForm
+from django.http import HttpResponse
+from .forms import QuestionForm, SubjectForm, TopicForm, LoginForm
 from .models import Question, Subject, Topic
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            clean_data = form.cleaned_data
+            user = authenticate(request,
+                                username=clean_data['username'],
+                                password=clean_data['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponse('Authenticated '\
+                                        'successfully')
+                else:
+                    return HttpResponse('Disabled account')
+            else:
+                return HttpResponse('Invalid login')
+    else:
+        form = LoginForm()
+    return render(request, 'notes/login.html', {'form': form})
 
+@login_required
 def topic_list_view(request, subject_slug=None):
     '''Define view for subject list
     If subject_slug exists then filter by that subject only
@@ -31,6 +54,7 @@ def topic_list_view(request, subject_slug=None):
 
 
 ## subject ##
+@login_required
 def subject_add_view(request):
     '''View to handle adding new subject to the db
     Get - returns empty subject add form
@@ -51,7 +75,8 @@ def subject_add_view(request):
     context = {'form': form,
                 'message': message}
     return render(request, template_name, context)     
-       
+
+@login_required
 def subject_update_view(request, subject_id):
     '''View to handle update of subject model
     Get method returns form in previous data.
@@ -74,6 +99,7 @@ def subject_update_view(request, subject_id):
                 'message': message}
     return render(request, template_name, context)   
 
+@login_required
 def subject_delete_view(request, subject_id):
     '''Delete a subject instance from the db
     '''
@@ -82,6 +108,7 @@ def subject_delete_view(request, subject_id):
     return redirect('/')
 
 ## topic ##
+@login_required
 def topic_detail_view(request, topic_id, topic_slug):
     '''View to handle topic detail
     Returns single topic item with its details, including questions
@@ -92,6 +119,7 @@ def topic_detail_view(request, topic_id, topic_slug):
                     'notes/detail.html',
                     context)
 
+@login_required
 def topic_add_view(request, subject_id):
     '''
         Handles GET and POST request for new Topic
@@ -114,7 +142,8 @@ def topic_add_view(request, subject_id):
         form = TopicForm(initial={'subject':subject})
     context = {'form': form}
     return render(request, template_name, context)     
-       
+
+@login_required
 def topic_update_view(request, topic_id):
     '''updates topic
     GET - returns topic form with previous data filled
@@ -136,6 +165,7 @@ def topic_update_view(request, topic_id):
     context = {'form': form}
     return render(request, template_name, context)   
 
+@login_required
 def topic_delete(request, topic_id):
     '''Delete a topic instance with given id
     '''
@@ -146,6 +176,7 @@ def topic_delete(request, topic_id):
     return redirect(subject_url)
 
 ## Question ###
+@login_required
 def question_add_view(request, topic_id):
     '''
         Handles GET and POST request for new Topic
@@ -169,7 +200,8 @@ def question_add_view(request, topic_id):
     context = {'form': form,
                 'topic_id':topic_id}
     return render(request, template_name, context)    
-       
+
+@login_required
 def question_update_view(request, topic_id, question_id):
     '''update question instance with given id
     GET - return form with fields filled with existing data to be updated
@@ -192,7 +224,7 @@ def question_update_view(request, topic_id, question_id):
     context = {'form': form}
     return render(request, template_name, context)   
 
-
+@login_required
 def question_delete_view(request, topic_id,  question_id):
     '''Delete a question resource
     '''

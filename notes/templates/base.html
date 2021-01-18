@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8" />
   <title>{% block title %} Your Stuff {% endblock %}</title>
@@ -9,11 +8,18 @@
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <link href="{% static "css/base.css" %}" rel="stylesheet">
 </head>
+
 <body>
+  {% if request.user.is_authenticated %}
   <nav id="navbar">
     <a href="/" class="logo">Your Map</a>
+    <a href="{% url "notes:logout" %}" class="float-right">Logout</a>
   </nav>
- 
+  {% else %}
+  <nav id="navbar">
+    <a href="{% url "notes:login" %}" class="float-right">SignUp</a>
+  </nav>
+  {% endif %}
   <div id="content">
     {% block content %}
 
@@ -21,6 +27,7 @@
   </div>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
 </body>
 
 </html>

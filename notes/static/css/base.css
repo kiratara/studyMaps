@@ -204,3 +204,7 @@ a:link{
 .resolved {
     background-color: grey;
 }
+
+.float-right {
+    float: right;
+}
