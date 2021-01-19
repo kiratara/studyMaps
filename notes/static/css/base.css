@@ -156,9 +156,9 @@ a:link{
     text-decoration: none;
 }
 
-.card-link{
+/* .card-link{
     color:  rgb(21, 76, 121);
-}
+} */
 
 .add-subject{
     border-radius: 7%;
@@ -207,4 +207,27 @@ a:link{
 
 .float-right {
     float: right;
+}
+
+.action{
+    color: rgb(13, 40, 90);
+}
+.action:hover {
+    color: rgb(111, 154, 233);
+}
+
+.delete{
+    color: rgb(121, 10, 10);
+}
+.delete:hover{
+    color: rgb(204, 6, 6);
+}
+
+nav a {
+    color: rgb(6, 39, 77);
+}
+
+.question-card a {
+    display: inline-block;
+    text-align: center;
 }

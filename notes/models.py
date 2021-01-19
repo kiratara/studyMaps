@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
@@ -12,7 +13,9 @@ class Subject(models.Model):
     updated  = models.DateTimeField(auto_now=True)
     slug = models.SlugField(max_length=200,
                             unique=True) # creation of index by unique
-
+    owner = models.ForeignKey(User, 
+                                on_delete=models.CASCADE, 
+                                related_name='subjects')
     class Meta:
         ordering = ['-created']
 

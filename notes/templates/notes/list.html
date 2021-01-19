@@ -26,8 +26,8 @@
     <header class="topic-header container"> 
         <h4>{{ subject.name }}</h4> 
         <ul>
-            <li><a href="{% url "notes:subject_update" subject.id %}">Edit</a></li>
-            <li><a href="{% url "notes:subject_delete" subject.id %}">Delete </a></li>
+            <li><a class="action" href="{% url "notes:subject_update" subject.id %}">Edit</a></li>
+            <li><a class="delete" href="{% url "notes:subject_delete" subject.id %}">Delete </a></li>
         </ul>
     </header>
     {% else %}
@@ -43,7 +43,7 @@
                 <h5 class="card-title ">{{ topic.title }}</h5>
                 <br>
                 <p class="card-text text-muted">{{ topic.notes|truncatechars:50 }}</p>
-                <a href="{{ topic.get_absolute_url }}" class="card-link">Visit</a>
+                <a class="action" href="{{ topic.get_absolute_url }}" class="card-link">Visit</a>
             </div>
         </div>
         {% endfor %}

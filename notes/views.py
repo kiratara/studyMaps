@@ -1,13 +1,34 @@
-from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.views import View
 from django.views.generic import CreateView, ListView, UpdateView
-from django.http import HttpResponse
-from .forms import QuestionForm, SubjectForm, TopicForm, LoginForm
+
+from .forms import (LoginForm, QuestionForm, SubjectForm, TopicForm,
+                    UserRegistrationForm)
 from .models import Question, Subject, Topic
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
+
+
+def register(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        if user_form.is_valid():
+            # Create a new user object but avoid saving it yet
+            new_user = user_form.save(commit=False)
+            # Set the chosen password
+            new_user.set_password(
+                user_form.cleaned_data['password'])
+            # Save the User object
+            new_user.save()
+            login(request, new_user)
+            return HttpResponseRedirect("/")
+    else:
+        user_form = UserRegistrationForm()
+    return render(request,
+                  'registration/register.html',
+                  {'user_form': user_form})
 
 def user_login(request):
     if request.method == 'POST':
@@ -35,8 +56,11 @@ def topic_list_view(request, subject_slug=None):
     '''Define view for subject list
     If subject_slug exists then filter by that subject only
     '''
+    current_user = request.user
+    current_id = current_user.id
+    
     subject = None
-    subjects = Subject.objects.all()
+    subjects = Subject.objects.filter(owner=current_id)
     topics = Topic.objects.all()
 
     if subject_slug:
@@ -60,6 +84,8 @@ def subject_add_view(request):
     Get - returns empty subject add form
     Post - add a new subject instance to the db
     '''
+    current_user = request.user
+    current_id = current_user.id
     template_name = 'notes/subject_form.html'
     existing_subject = None
     message = "Let's add a new subject"
@@ -68,6 +94,7 @@ def subject_add_view(request):
         if form.is_valid():
             clean_data = form.cleaned_data
             new_subject = Subject(**clean_data)
+            new_subject.owner = current_user
             new_subject.save()
             return HttpResponseRedirect('/')
     else:

@@ -6,33 +6,33 @@
 {% block content %}
 <div class="card mt-4">
     <div class="card-header">
-        {{ topic.subject}}
+        Subject: {{ topic.subject}}
     </div>
     <div class="card-body">
-      <h5 class="card-title">{{ topic.title }}</h5>
+      <h5 class="card-title">Topic: {{ topic.title }}</h5>
       <p class="card-text">{{ topic.notes }}</p>
       <div class="card-body">
-            <a href="{% url "notes:topic_update" topic.id %}" >Edit</a>          
+            <a class="action" href="{% url "notes:topic_update" topic.id %}" >Edit</a>          
         {% if topic.question.all %}
        <h3> Your Questions: </h3>
         <div class="row gap-2">
             {% for q in topic.question.all %}
             <div class="card shadow-sm rounded-2 m-1" style="width: 14rem;">
-                <div class="card-body">
+                <div class="card-body question-card">
                     <h5 class="card-title" {% if q.resolved %}class="resolved" {% endif %}>{{ q.title }}</h5>
                     <!-- <button type='button' class="btn btn-secondary">Resolved</button> -->
                     <!-- <a href="{% url "notes:question_add" topic.id %}">Resolved</a> -->
-                    <a href="{% url "notes:question_update" topic.id q.id %}">Edit</a>
-                    <a href="{% url "notes:question_delete" topic.id q.id %}">Delete</a>
+                    <a class="action" href="{% url "notes:question_update" topic.id q.id %}">Edit</a>
+                    <a class="delete" href="{% url "notes:question_delete" topic.id q.id %}">Delete</a>
                 </div>
             </div>
             {% endfor %}
         </div>
         {% endif %}
         <br>
-        <a href="{% url "notes:topic_delete" topic.id %}">Delete</a>
+        <a  class= "delete" href="{% url "notes:topic_delete" topic.id %}">Delete</a>
         <br>
-        <a href="{% url "notes:question_add" topic.id %}"> Add Question</a>
+        <a class="action" href="{% url "notes:question_add" topic.id %}"> Add Question</a>
       </div>
     </div>
   </div>
