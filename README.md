@@ -6,4 +6,4 @@ The application also allows user to add questions for per topic.
 Python - Django
 HTML/CSS
 
-![](notes/static/img/studyMaps.mov)
+![](notes/static/img/studyMaps.gif)
